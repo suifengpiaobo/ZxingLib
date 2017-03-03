@@ -55,6 +55,7 @@ public class QRScanActivity extends AppCompatActivity implements SurfaceHolder.C
     private static final float BEEP_VOLUME = 0.10f;
     private boolean vibrate;
 
+
     private static final long VIBRATE_DURATION = 200L;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class QRScanActivity extends AppCompatActivity implements SurfaceHolder.C
 
         init();
     }
+
     @SuppressWarnings("deprecation")
     private void init() {
         mSurfaceView = (SurfaceView) findViewById(R.id.preview_view);
@@ -75,6 +77,7 @@ public class QRScanActivity extends AppCompatActivity implements SurfaceHolder.C
         mScanner.setConfig(0, Config.Y_DENSITY, 3);
         autoFocusHandler = new Handler();
         asyncDecode = new AsyncDecode();
+
     }
 
     @Override
@@ -269,13 +272,10 @@ public class QRScanActivity extends AppCompatActivity implements SurfaceHolder.C
         }
 
         if (result != null) {
-            System.out.println("result--->>>"+result);
-            Toast.makeText(QRScanActivity.this,"result--->>>"+result,Toast.LENGTH_SHORT).show();
+            handleResult(result);
         }
-
-        handleResult(null, result);
-
     }
+
 
     @Override
     protected void onPause() {
@@ -283,12 +283,10 @@ public class QRScanActivity extends AppCompatActivity implements SurfaceHolder.C
 
     }
 
-    private void handleResult(Param param, String result) {
+    private void handleResult(String result) {
+        Toast.makeText(QRScanActivity.this,"result--->>>"+result,Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 鑷姩瀵圭劍鍥炶皟
-     */
     Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
         public void onAutoFocus(boolean success, Camera camera) {
             autoFocusHandler.postDelayed(doAutoFocus, 1000);
